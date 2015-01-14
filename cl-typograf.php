@@ -5,7 +5,7 @@ Plugin Name: CL Typograf
 Plugin URI: http://URI_Of_Page_Describing_Plugin_and_Updates
 Description: A brief description of the Plugin.
 Version: 1.0
-Author: joker
+Author: Kalinichenko Ivan
 Author URI: http://URI_Of_The_Plugin_Author
 License: A "Slug" license name e.g. GPL2
 */
@@ -44,7 +44,16 @@ function cl_tpf_save_post( $post_id ) {
 	}
 
 	$typograf = new RemoteTypograf( get_bloginfo( 'charset' ) );
+	$typograf->noEntities();
+	$typograf->br( false );
+	$typograf->p( false );
+
+	$title   = $typograf->processText( strip_tags( $post->post_title ) );
+	$excerpt = $typograf->processText( strip_tags( $post->post_excerpt ) );
+
 	$typograf->htmlEntities();
+	$typograf->br( true );
+	$typograf->p( true );
 
 	$content = $typograf->processText( stripslashes( $post->post_content ) );
 
@@ -52,6 +61,8 @@ function cl_tpf_save_post( $post_id ) {
 
 	wp_update_post( array(
 		'ID'           => $post_id,
+		'post_title'   => $title,
+		'post_excerpt' => $excerpt,
 		'post_content' => $content
 	) );
 
