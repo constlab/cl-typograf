@@ -31,6 +31,27 @@ $types = get_post_types( array( 'public' => true ), 'objects' );
 						описание, контент</p>
 				</td>
 			</tr>
+			<tr>
+				<th scope="row">
+					Автоматическое форматирование (wpautop)
+					<p class="description">Заменяет двойной перенос строки на параграфы. Функционал WordPress</p>
+				</th>
+				<td>
+					<fieldset>
+						<label for="cl_autop_content">
+							<input name="cl_autop_content" id="cl_autop_content" type="checkbox"
+								<?php echo checked( get_option( 'cl_autop_content' ), 'on' ) ?> />
+							Контент
+						</label>
+						<br/>
+						<label for="cl_autop_excerpt">
+							<input name="cl_autop_excerpt" id="cl_autop_excerpt" type="checkbox"
+								<?php echo checked( get_option( 'cl_autop_excerpt' ), 'on' ) ?> />
+							Описание
+						</label>
+					</fieldset>
+				</td>
+			</tr>
 			</tbody>
 		</table>
 		<p class="submit">
