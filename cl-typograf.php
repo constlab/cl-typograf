@@ -16,12 +16,12 @@ if ( ! defined( 'WPINC' ) ) {
 
 add_action( 'init', function () {
 
-	if ( boolval( get_option( 'cl_autop_content' ) ) ) {
+	if ( (bool) get_option( 'cl_autop_content' ) ) {
 		remove_filter( 'the_content', 'wpautop' );
 		remove_filter( 'the_content', 'wptexturize' );
 	}
 
-	if ( boolval( get_option( 'cl_autop_excerpt' ) ) ) {
+	if ( (bool) get_option( 'cl_autop_excerpt' ) ) {
 		remove_filter( 'the_excerpt', 'wpautop' );
 		remove_filter( 'the_excerpt', 'wptexturize' );
 	}
