@@ -88,39 +88,47 @@ class Cl_Tpf_Backend {
 	}
 
 	/**
-	 * @param $post_id int
+	 * @param $post_ID int
 	 */
-	function save_post_process( $post_id ) {
-		$post = get_post( $post_id );
-		$tp   = boolval( get_option( 'cl_tpf_' . $post->post_type ) );
+	function save_post_process( $post_ID ) {
+		global $post;
 
+		$tp = boolval( get_option( 'cl_tpf_' . $post->post_type ) );
 		if ( ! $tp ) {
 			return;
 		}
+
+		if ( wp_is_post_revision( $post_ID ) ) {
+			return;
+		}
+
+		$post_title   = $_POST['post_title'];
+		$post_excerpt = $_POST['post_excerpt'];
+		$post_content = $_POST['post_content'];
 
 		$typograf = new RemoteTypograf( get_bloginfo( 'charset' ) );
 		$typograf->noEntities();
 		$typograf->br( false );
 		$typograf->p( false );
 
-		$title   = $typograf->processText( strip_tags( $post->post_title ) );
-		$excerpt = $typograf->processText( strip_tags( $post->post_excerpt ) );
+		$title   = ( ! empty( $post_title ) ) ? $typograf->processText( strip_tags( $post_title ) ) : '';
+		$excerpt = ( ! empty( $post_excerpt ) ) ? $typograf->processText( strip_tags( $post_excerpt ) ) : '';
 
 		$typograf->htmlEntities();
 		$typograf->br( false );
 		$typograf->p( true );
 
-		$content = $typograf->processText( stripslashes( $post->post_content ) );
+		$content = ( ! empty( $post_content ) ) ? $typograf->processText( stripcslashes( $post_content ) ) : '';
 
-		remove_action( 'save_post', 'cl_tpf_save_post' );
+		remove_action( 'save_post', array( $this, 'save_post_process' ) );
 
 		wp_update_post( array(
-			'ID'           => $post_id,
+			'ID'           => $post_ID,
 			'post_title'   => $title,
 			'post_excerpt' => $excerpt,
 			'post_content' => $content
 		) );
 
-		add_action( 'save_post', 'cl_tpf_save_post' );
+		add_action( 'save_post', array( $this, 'save_post_process' ) );
 	}
 }
