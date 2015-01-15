@@ -16,11 +16,15 @@ if ( ! defined( 'WPINC' ) ) {
 
 add_action( 'init', function () {
 
-	remove_filter( 'the_content', 'wpautop' );
-	remove_filter( 'the_excerpt', 'wpautop' );
+	if ( boolval( get_option( 'cl_autop_content' ) ) ) {
+		remove_filter( 'the_content', 'wpautop' );
+		remove_filter( 'the_content', 'wptexturize' );
+	}
 
-	remove_filter( 'the_content', 'wptexturize' );
-	remove_filter( 'the_excerpt', 'wptexturize' );
+	if ( boolval( get_option( 'cl_autop_excerpt' ) ) ) {
+		remove_filter( 'the_excerpt', 'wpautop' );
+		remove_filter( 'the_excerpt', 'wptexturize' );
+	}
 
 } );
 

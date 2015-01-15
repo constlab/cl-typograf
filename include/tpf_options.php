@@ -33,7 +33,7 @@ $types = get_post_types( array( 'public' => true ), 'objects' );
 			</tr>
 			<tr>
 				<th scope="row">
-					Автоматическое форматирование (wpautop)
+					Отключить автоматическое форматирование (wpautop)
 					<p class="description">Заменяет двойной перенос строки на параграфы. Функционал WordPress</p>
 				</th>
 				<td>
