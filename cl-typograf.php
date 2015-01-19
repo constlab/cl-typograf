@@ -28,6 +28,35 @@ add_action( 'init', function () {
 
 } );
 
+/**
+ * @param $content
+ * @param bool $entities
+ * @param bool $p
+ * @param bool $br
+ *
+ * @return mixed|string
+ */
+function cl_tpf( $content, $entities = true, $p = true, $br = false ) {
+
+	require 'vendor/remotetypograf.php';
+
+	$typograf = new RemoteTypograf( get_bloginfo( 'charset' ) );
+
+	if ( $entities ) {
+		$typograf->htmlEntities();
+	} else {
+		$typograf->noEntities();
+	}
+
+	$typograf->br( $br );
+	$typograf->p( $p );
+
+
+	$result = $typograf->processText(stripcslashes($content));
+
+	return $result;
+}
+
 if ( ! is_admin() ) {
 	return;
 }
