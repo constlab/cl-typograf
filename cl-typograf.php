@@ -32,6 +32,14 @@ if ( ! is_admin() ) {
 	return;
 }
 
+$cl_plugin = plugin_basename( __FILE__ );
+add_filter( "plugin_action_links_$cl_plugin", function ( $links ) {
+	$settings_link = '<a href="options-general.php?page=cl-typograf.php">Настройки</a>';
+	array_unshift( $links, $settings_link );
+
+	return $links;
+} );
+
 require 'include/class-cl-tpf-backend.php';
 $backend = new Cl_Tpf_Backend();
 
