@@ -18,9 +18,9 @@ $types = get_post_types( array( 'public' => true ), 'objects' );
 					<fieldset>
 						<?php foreach ( $types as $type ): ?>
 							<label for="cl_tpf_<?php echo $type->name; ?>">
-								<input name="cl_tpf_<?php echo $type->name; ?>" type="checkbox"
+								<input name="cl_tpf_<?php echo $type->name; ?>" type="checkbox" value="true"
 								       id="cl_tpf_<?php echo $type->name; ?>"
-									<?php echo checked( get_option( 'cl_tpf_' . $type->name ), 'on' ) ?>>
+									<?php echo checked( (bool)get_option( 'cl_tpf_' . $type->name ), true ) ?>>
 								<?php echo $type->labels->name; ?>
 							</label>
 							<br/>
