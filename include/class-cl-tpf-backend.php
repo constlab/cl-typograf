@@ -22,8 +22,29 @@ class Cl_Tpf_Backend {
 	 * Add option page in options section
 	 */
 	function option_menu() {
-		add_options_page( 'Типограф', 'Типограф', 'manage_options', 'cl-typograf.php', function () {
+		$tpf_page = add_options_page( 'Типограф', 'Типограф', 'manage_options', 'cl-typograf.php', function () {
 			include 'tpf_options.php';
+		} );
+
+		add_action( 'load-' . $tpf_page, function () {
+			$screen = get_current_screen();
+
+			$screen->add_help_tab( array(
+				'id'      => 'cl_tpf_general_help',
+				'title'   => 'Типограф',
+				'content' => '<p>Укажите галками в каких типах записей применять типограф.</p>' .
+				             '<p>Типограф применяется автоматически при сохранениии записи.</p>' .
+				             '<p>В редактировании отдельной записи сожно отключить использование типографа.</p>',
+			) );
+
+			$screen->add_help_tab( array(
+				'id'      => 'cl_tpf_format_help',
+				'title'   => 'Форматирование',
+				'content' => '<p>При сохранениии и при выводе контента WordPress пытается автоматически расставить параграфы и переносы строк.</p>' .
+				             '<p>Если это нарушает оформление можно отключить эту возможность.</p>' .
+				             '<p>Галками указываются поля для которых эта возможность будет отключена.</p>',
+			) );
+
 		} );
 	}
 
