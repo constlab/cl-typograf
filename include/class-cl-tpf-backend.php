@@ -5,8 +5,11 @@ require __DIR__ . '/../vendor/remotetypograf.php';
 class Cl_Tpf_Backend {
 
 	var $mce_version = '20080121';
+	var $content_types = array();
 
 	public function __construct() {
+		$this->content_types = get_post_types( array( 'public' => true ), 'objects' );
+
 		add_action( 'admin_menu', array( $this, 'option_menu' ) );
 		add_action( 'admin_init', array( $this, 'options_init' ) );
 		add_action( 'save_post', array( $this, 'save_post_process' ) );
@@ -28,13 +31,14 @@ class Cl_Tpf_Backend {
 	 * Register plugin's settings
 	 */
 	function options_init() {
-		$types = get_post_types( array( 'public' => true ), 'names' );
-		foreach ( $types as $type ) {
-			register_setting( 'cl_typograf', 'cl_tpf_' . $type, '' );
+		foreach ( $this->content_types as $type_key => $type_value ) {
+			register_setting( 'cl_typograf', 'cl_tpf_' . $type_key, '' );
 		}
 
 		register_setting( 'cl_typograf', 'cl_autop_content', '' );
 		register_setting( 'cl_typograf', 'cl_autop_excerpt', '' );
+
+		$this->add_metaboxes();
 	}
 
 	/**
@@ -88,6 +92,21 @@ class Cl_Tpf_Backend {
 	}
 
 	/**
+	 * Add meta box to post edit page
+	 */
+	function add_metaboxes() {
+		foreach ( $this->content_types as $type_key => $type_value ) {
+			if ( ! get_option( 'cl_tpf_' . $type_value->name ) ) {
+				continue;
+			}
+
+			add_meta_box( 'cl_tpf_edit', 'Типограф', function () {
+				include 'tpf_box.php';
+			}, $type_value->name, 'side', 'low' );
+		}
+	}
+
+	/**
 	 * @param $post_ID int
 	 */
 	function save_post_process( $post_ID ) {
@@ -100,6 +119,14 @@ class Cl_Tpf_Backend {
 
 		if ( wp_is_post_revision( $post_ID ) ) {
 			return;
+		}
+
+		if ( ! isset( $_POST['cl_tpf_use'] ) ) {
+			update_post_meta( $post_ID, 'cl_tpf_disable', 'on' );
+
+			return;
+		} else {
+			delete_post_meta( $post_ID, 'cl_tpf_disable' );
 		}
 
 		$post_title   = $_POST['post_title'];
