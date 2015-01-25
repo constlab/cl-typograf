@@ -6,6 +6,9 @@ class Cl_Tpf_Backend {
 
 	var $mce_version = '20080121';
 
+	/**
+	 * Init actions
+	 */
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'option_menu' ) );
 		add_action( 'admin_init', array( $this, 'options_init' ) );
@@ -75,6 +78,8 @@ class Cl_Tpf_Backend {
 	}
 
 	/**
+	 * Add Tiny MCE plugin
+	 *
 	 * @param $plugin_array
 	 *
 	 * @return mixed
@@ -86,6 +91,8 @@ class Cl_Tpf_Backend {
 	}
 
 	/**
+	 * Add button to Tiny MCE tool bar
+	 *
 	 * @param $buttons
 	 *
 	 * @return mixed
@@ -108,6 +115,8 @@ class Cl_Tpf_Backend {
 	}
 
 	/**
+	 * Add js for show HTML tags in editor
+	 *
 	 * @param $todo
 	 *
 	 * @return mixed
@@ -190,6 +199,8 @@ class Cl_Tpf_Backend {
 	}
 
 	/**
+	 * Save hook, typography text
+	 *
 	 * @param $post_ID int
 	 */
 	function save_post_process( $post_ID ) {
