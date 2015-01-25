@@ -11,6 +11,8 @@ class Cl_Tpf_Backend {
 		add_action( 'admin_init', array( $this, 'options_init' ) );
 		add_action( 'save_post', array( $this, 'save_post_process' ) );
 
+		add_action( 'wp_ajax_cl-tpf', array( $this, 'tpf_text' ) );
+
 		add_filter( 'tiny_mce_before_init', array( $this, 'tiny_mce_before_init' ) );
 		add_filter( 'print_scripts_array', array( $this, 'rewrite_default_script' ) );
 	}
@@ -58,6 +60,31 @@ class Cl_Tpf_Backend {
 		register_setting( 'cl_typograf', 'cl_autop_excerpt', '' );
 
 		$this->add_metaboxes();
+
+		add_filter( "mce_external_plugins", array( $this, 'editor_add_buttons' ) );
+		add_filter( 'mce_buttons', array( $this, 'editor_register_buttons' ) );
+	}
+
+	/**
+	 * @param $plugin_array
+	 *
+	 * @return mixed
+	 */
+	function editor_add_buttons( $plugin_array ) {
+		$plugin_array['tpf'] = $js_path = plugins_url( '', __FILE__ ) . '/../assets/js/tpf_mce.js';;
+
+		return $plugin_array;
+	}
+
+	/**
+	 * @param $buttons
+	 *
+	 * @return mixed
+	 */
+	function editor_register_buttons( $buttons ) {
+		array_push( $buttons, 'tpf' );
+
+		return $buttons;
 	}
 
 	/**
@@ -126,6 +153,31 @@ class Cl_Tpf_Backend {
 				include 'tpf_box.php';
 			}, $type, 'side', 'low' );
 		}
+	}
+
+	/**
+	 * Typography text
+	 */
+	function tpf_text() {
+
+		if ( ! isset( $_POST['content'] ) ) {
+			wp_send_json_error( 'Нет текста для обработки!' );
+		}
+
+		$content = $_POST['content'];
+
+		if ( empty( $content ) ) {
+			wp_send_json_error( 'Нет текста!' );
+		}
+
+		$typograf = new RemoteTypograf( get_bloginfo( 'charset' ) );
+		$typograf->htmlEntities();
+		$typograf->br( false );
+		$typograf->p( true );
+
+		$result = $typograf->processText( stripcslashes( $content ) );
+
+		wp_send_json_success( $result );
 	}
 
 	/**
