@@ -195,6 +195,10 @@ class Cl_Tpf_Backend {
 	function save_post_process( $post_ID ) {
 		global $post;
 
+		if ( ! $post ) {
+			return;
+		}
+
 		$tp = (bool) get_option( 'cl_tpf_' . $post->post_type );
 		if ( ! $tp ) {
 			return;
