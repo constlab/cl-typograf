@@ -12,7 +12,10 @@ $types = get_post_types( array( 'public' => true ), 'objects' );
 			<tbody>
 			<tr>
 				<th scope="row">
-					Использовать типограф
+					Использовать типограф&nbsp;
+					<a href="#" onclick="show_help('tab-link-cl_tpf_general_help');">
+						<small>?</small>
+					</a>
 				</th>
 				<td>
 					<fieldset>
@@ -20,7 +23,7 @@ $types = get_post_types( array( 'public' => true ), 'objects' );
 							<label for="cl_tpf_<?php echo $type->name; ?>">
 								<input name="cl_tpf_<?php echo $type->name; ?>" type="checkbox" value="true"
 								       id="cl_tpf_<?php echo $type->name; ?>"
-									<?php echo checked( (bool)get_option( 'cl_tpf_' . $type->name ), true ) ?>>
+									<?php echo checked( (bool) get_option( 'cl_tpf_' . $type->name ), true ) ?>>
 								<?php echo $type->labels->name; ?>
 							</label>
 							<br/>
@@ -33,8 +36,14 @@ $types = get_post_types( array( 'public' => true ), 'objects' );
 			</tr>
 			<tr>
 				<th scope="row">
-					Отключить автоматическое форматирование (wpautop)
-					<p class="description">Заменяет двойной перенос строки на параграфы. Функционал WordPress</p>
+					Отключить автоматическое форматирование
+					&nbsp;
+					<a href="#" onclick="show_help('tab-link-cl_tpf_format_help');">
+						<small>?</small>
+					</a>
+
+					<p class="description">Заменяет двойной перенос строки на параграфы. Функционал WordPress -
+						wpautop</p>
 				</th>
 				<td>
 					<fieldset>
@@ -52,6 +61,24 @@ $types = get_post_types( array( 'public' => true ), 'objects' );
 					</fieldset>
 				</td>
 			</tr>
+			<tr>
+				<th scope="row">
+					Опции
+					&nbsp;
+					<a href="#" onclick="show_help('tab-link-cl_tpf_options_help');">
+						<small>?</small>
+					</a>
+				</th>
+				<td>
+					<fieldset>
+						<label for="cl_disable_mce">
+							<input name="cl_disable_mce" id="cl_disable_mce" type="checkbox"
+								<?php echo checked( get_option( 'cl_disable_mce' ), 'on' ) ?> />
+							Отключить типограф для редактора
+						</label>
+					</fieldset>
+				</td>
+			</tr>
 			</tbody>
 		</table>
 		<p class="submit">
@@ -60,3 +87,14 @@ $types = get_post_types( array( 'public' => true ), 'objects' );
 		</p>
 	</form>
 </div>
+
+<script>
+	function show_help(tab) {
+		var expand_link = jQuery("#contextual-help-link");
+		if (expand_link.attr('aria-expanded') == 'false') {
+			expand_link.trigger('click');
+		}
+		jQuery(".contextual-help-tabs #" + tab + " a").trigger('click');
+		return false;
+	}
+</script>

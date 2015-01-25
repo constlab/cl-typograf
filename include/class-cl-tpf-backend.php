@@ -44,6 +44,12 @@ class Cl_Tpf_Backend {
 				             '<p>Галками указываются поля для которых эта возможность будет отключена.</p>',
 			) );
 
+			$screen->add_help_tab( array(
+				'id'      => 'cl_tpf_options_help',
+				'title'   => 'Опции',
+				'content' => '<p><strong>Отключить типограф для редактора</strong> — убирает кнопку "Типограф" на панели инструментов в редакторе</p>'
+			) );
+
 		} );
 	}
 
@@ -58,11 +64,14 @@ class Cl_Tpf_Backend {
 
 		register_setting( 'cl_typograf', 'cl_autop_content', '' );
 		register_setting( 'cl_typograf', 'cl_autop_excerpt', '' );
+		register_setting( 'cl_typograf', 'cl_disable_mce', '' );
 
 		$this->add_metaboxes();
 
-		add_filter( "mce_external_plugins", array( $this, 'editor_add_buttons' ) );
-		add_filter( 'mce_buttons', array( $this, 'editor_register_buttons' ) );
+		if ( ! (bool) get_option( 'cl_disable_mce' ) ) {
+			add_filter( 'mce_external_plugins', array( $this, 'editor_add_buttons' ) );
+			add_filter( 'mce_buttons', array( $this, 'editor_register_buttons' ) );
+		}
 	}
 
 	/**
