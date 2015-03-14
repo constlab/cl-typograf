@@ -2,11 +2,11 @@
 
 /*
 Plugin Name: CL Typograf
-Plugin URI: http://URI_Of_Page_Describing_Plugin_and_Updates
-Description: A brief description of the Plugin.
+Plugin URI: https://bitbucket.org/constlab/cl-typograf
+Description: Типограф для WordPress.
 Version: 1.0
-Author: Kalinichenko Ivan
-Author URI: http://URI_Of_The_Plugin_Author
+Author: Kalinichenko Ivan <kalinichenko@constlab.ru>
+Author URI: http://constlab.ru
 License: A "Slug" license name e.g. GPL2
 */
 
@@ -52,7 +52,7 @@ function cl_tpf( $content, $entities = true, $p = true, $br = false ) {
 	$typograf->p( $p );
 
 
-	$result = $typograf->processText(stripcslashes($content));
+	$result = $typograf->processText( stripcslashes( $content ) );
 
 	return $result;
 }
@@ -62,17 +62,15 @@ if ( ! is_admin() ) {
 }
 
 $cl_plugin = plugin_basename( __FILE__ );
-add_filter( "plugin_action_links_$cl_plugin", function ( $links ) {
+add_filter( "plugin_action_links_$cl_plugin", 'plugin_action_links' );
+function plugin_action_links( $links ) {
 	$settings_link = '<a href="options-general.php?page=cl-typograf.php">Настройки</a>';
 	array_unshift( $links, $settings_link );
 
 	return $links;
-} );
+}
 
 require 'include/class-cl-tpf-backend.php';
 $backend = new Cl_Tpf_Backend();
-
-
-
 
 

@@ -24,6 +24,8 @@
                             ed.setContent(data.data);
                         else
                             ed.execCommand('mceInsertContent', 0, data.data);
+
+                        alert('Текст успешно обработан');
                     } else
                         alert('Ошибка! ' + data.data);
                 });
