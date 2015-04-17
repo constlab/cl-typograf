@@ -231,19 +231,21 @@ class Cl_Tpf_Backend {
 		$post_excerpt = $_POST['post_excerpt'];
 		$post_content = $_POST['post_content'];
 
+        $big_length = 32768;
+
 		$typograf = new RemoteTypograf( get_bloginfo( 'charset' ) );
 		$typograf->noEntities();
 		$typograf->br( false );
 		$typograf->p( false );
 
-		$title   = ( ! empty( $post_title ) ) ? $typograf->processText( strip_tags( $post_title ) ) : '';
-		$excerpt = ( ! empty( $post_excerpt ) ) ? $typograf->processText( strip_tags( $post_excerpt ) ) : '';
+		$title   = ( ! empty( $post_title ) && mb_strlen($post_title) < $big_length) ? $typograf->processText( strip_tags( $post_title ) ) : '';
+		$excerpt = ( ! empty( $post_excerpt ) && mb_strlen($post_excerpt) < $big_length) ? $typograf->processText( strip_tags( $post_excerpt ) ) : '';
 
 		$typograf->htmlEntities();
 		$typograf->br( false );
 		$typograf->p( true );
 
-		$content = ( ! empty( $post_content ) ) ? $typograf->processText( stripcslashes( $post_content ) ) : '';
+		$content = ( ! empty( $post_content )  && mb_strlen($post_content) < $big_length) ? $typograf->processText( stripcslashes( $post_content ) ) : '';
 
 		remove_action( 'save_post', array( $this, 'save_post_process' ) );
 
