@@ -1,6 +1,6 @@
 === CL Typograf ===
 Contributors: joker-bs
-Donate link: http://example.com/
+Donate link: http://constlab.ru/
 Tags: typograf, content, text
 Requires at least: 3.0.1
 Tested up to: 4.1.1
@@ -18,15 +18,15 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Installation ==
 
-1. Распакуйте архив в папку /wp-content/plugins/. Убедитесь, что все php-файлы находятся в собственной папке, а не в общем каталоге /wp-content/plugins/.
+1. Распакуйте архив в папку /wp-content/plugins/cl-typograf. Убедитесь, что все php-файлы находятся в собственной папке, а не в общем каталоге /wp-content/plugins/.
 2. Активируйте плагин через меню 'Plugins' в WordPress.
-3. Настройте плагин в меню 'Настройки' - 'Типограф'
+3. Настройте плагин в меню 'Настройки' - 'Типограф'.
 
 == Frequently Asked Questions ==
 
 = Как использовать типограф с произвольным типом записи? =
 
-Перейти в меню 'Настройки' - 'Типограф', в секции 'Использовать типограф' установите галочку напротив нужного типа записи
+Перейти в меню 'Настройки' - 'Типограф', в секции 'Использовать типограф' установите галочку напротив нужного типа записи.
 
 = Как использовать типограф из редактора? =
 
@@ -38,4 +38,4 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 == Changelog ==
 
 = 1.0 =
-* Первая версия плаигна
+* Первая версия плагина

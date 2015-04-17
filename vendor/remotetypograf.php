@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 	remotetypograf.php
 	PHP-implementation of ArtLebedevStudio.RemoteTypograf class (web-service client)
@@ -19,7 +19,7 @@
 		include "remotetypograf.php";
 		$remoteTypograf = new RemoteTypograf();
 		// $remoteTypograf = new RemoteTypograf ('Windows-1251');
-		print $remoteTypograf->processText ('"Вы все еще кое-как верстаете в "Ворде"? - Тогда мы идем к вам!"');
+		print $remoteTypograf->processText ('"пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ "пїЅпїЅпїЅпїЅпїЅ"? - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ!"');
 */
 
 class RemoteTypograf

@@ -10,23 +10,19 @@ Author URI: http://constlab.ru
 License: A "Slug" license name e.g. GPL2
 */
 
-if ( ! defined( 'WPINC' ) ) {
-	die;
+if (!defined('WPINC')) {
+    die;
 }
 
-add_action( 'init', function () {
+if ((bool)get_option('cl_autop_content')) {
+    remove_filter('the_content', 'wpautop');
+    remove_filter('the_content', 'wptexturize');
+}
 
-	if ( (bool) get_option( 'cl_autop_content' ) ) {
-		remove_filter( 'the_content', 'wpautop' );
-		remove_filter( 'the_content', 'wptexturize' );
-	}
-
-	if ( (bool) get_option( 'cl_autop_excerpt' ) ) {
-		remove_filter( 'the_excerpt', 'wpautop' );
-		remove_filter( 'the_excerpt', 'wptexturize' );
-	}
-
-} );
+if ((bool)get_option('cl_autop_excerpt')) {
+    remove_filter('the_excerpt', 'wpautop');
+    remove_filter('the_excerpt', 'wptexturize');
+}
 
 /**
  * @param $content
@@ -36,41 +32,44 @@ add_action( 'init', function () {
  *
  * @return mixed|string
  */
-function cl_tpf( $content, $entities = true, $p = true, $br = false ) {
+function cl_tpf($content, $entities = true, $p = true, $br = false)
+{
 
-	require 'vendor/remotetypograf.php';
+    require 'vendor/remotetypograf.php';
 
-	$typograf = new RemoteTypograf( get_bloginfo( 'charset' ) );
+    $typograf = new RemoteTypograf(get_bloginfo('charset'));
 
-	if ( $entities ) {
-		$typograf->htmlEntities();
-	} else {
-		$typograf->noEntities();
-	}
+    if ($entities) {
+        $typograf->htmlEntities();
+    } else {
+        $typograf->noEntities();
+    }
 
-	$typograf->br( $br );
-	$typograf->p( $p );
+    $typograf->br($br);
+    $typograf->p($p);
 
 
-	$result = $typograf->processText( stripcslashes( $content ) );
+    $result = $typograf->processText(stripcslashes($content));
 
-	return $result;
+    return $result;
 }
 
-if ( ! is_admin() ) {
-	return;
+if (!is_admin()) {
+    return;
 }
 
-$cl_plugin = plugin_basename( __FILE__ );
-add_filter( "plugin_action_links_$cl_plugin", 'plugin_action_links' );
-function plugin_action_links( $links ) {
-	$settings_link = '<a href="options-general.php?page=cl-typograf.php">Настройки</a>';
-	array_unshift( $links, $settings_link );
+$cl_plugin = plugin_basename(__FILE__);
+add_filter("plugin_action_links_$cl_plugin", 'plugin_action_links');
+function plugin_action_links($links)
+{
+    $settings_link = '<a href="options-general.php?page=cl-typograf.php">Настройки</a>';
+    array_unshift($links, $settings_link);
 
-	return $links;
+    return $links;
 }
 
 require 'include/class-cl-tpf-backend.php';
-$backend = new Cl_Tpf_Backend();
+
+new Cl_Tpf_Backend();
 
 
