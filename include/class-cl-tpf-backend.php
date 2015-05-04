@@ -189,11 +189,11 @@ class Cl_Tpf_Backend {
 		}
 
 		$typograf = new RemoteTypograf( get_bloginfo( 'charset' ) );
-		$typograf->htmlEntities();
+		$typograf->mixedEntities();
 		$typograf->br( false );
 		$typograf->p( true );
 
-		$result = $typograf->processText( stripcslashes( $content ) );
+		$result = $typograf->processText(  $content );
 
 		wp_send_json_success( $result );
 	}
@@ -245,7 +245,7 @@ class Cl_Tpf_Backend {
 		$typograf->br( false );
 		$typograf->p( true );
 
-		$content = ( ! empty( $post_content )  && mb_strlen($post_content) < $big_length) ? $typograf->processText( stripcslashes( $post_content ) ) : '';
+		$content = ( ! empty( $post_content )  && mb_strlen($post_content) < $big_length) ? $typograf->processText(  $post_content ) : '';
 
 		remove_action( 'save_post', array( $this, 'save_post_process' ) );
 
