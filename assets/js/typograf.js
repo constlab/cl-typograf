@@ -99,3 +99,16 @@ function initQtag() {
 			});
 		}, 2000);
 }
+
+$(document).ready(function () {
+	$('#tpf-dialog-ok').click(function () {
+		var content = $('textarea#tpf-one').val();
+
+		typograf(content, false, function (result) {
+			$('textarea#tpf-one').val(result);
+			alert('Текст успешно обработан');
+		});
+
+		return false;
+	});
+});

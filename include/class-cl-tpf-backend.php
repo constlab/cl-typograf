@@ -171,9 +171,11 @@ class Cl_Tpf_Backend {
 	/**
 	 * Include assets
 	 */
-	function enqueue_scripts(){
-		wp_register_script( 'typograf', plugins_url( '', __FILE__ ) . '/../assets/js/typograf.js',array('jquery'));
-		wp_enqueue_script('typograf');
+	function enqueue_scripts() {
+		wp_register_script( 'typograf', plugins_url( '', __FILE__ ) . '/../assets/js/typograf.js', array( 'jquery' ) );
+		wp_enqueue_script( 'typograf' );
+
+		add_thickbox();
 	}
 
 	/**
@@ -204,7 +206,7 @@ class Cl_Tpf_Backend {
 		}
 
 		$fragment = (bool) $_POST['fragment'];
-		$content  = $_POST['content'];
+		$content  = htmlentities2( $_POST['content'] );
 
 		if ( empty( $content ) ) {
 			wp_send_json_error( 'Нет текста!' );
@@ -251,7 +253,7 @@ class Cl_Tpf_Backend {
 
 		$post_title   = $_POST['post_title'];
 		$post_excerpt = $_POST['post_excerpt'];
-		$post_content = $_POST['post_content'];
+		$post_content = htmlentities2( $_POST['post_content'] );
 
 		$big_length = 32768;
 
