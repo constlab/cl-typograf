@@ -1,4 +1,5 @@
 (function ($) {
+
 	tinymce.create('tinymce.plugins.ClTpf', {
 		/**
 		 * Initializes the plugin, this will be executed after the plugin has been created.
@@ -15,24 +16,24 @@
 				image: url + '/../img/type_btn.svg'
 			});
 			ed.addCommand('tpf', function () {
-				var command_url = ed.documentBaseUrl + 'admin-ajax.php?action=cl-tpf';
-				var content = (ed.selection.getContent() == '') ? ed.getContent() : ed.selection.getContent();
 
-				if(getByteLen(content) >= 32768){
-					alert('Текст слишком большой для типографа. Отправляйте текст на обработку частями');
-					return false;
+				var fragment = false;
+				var content = ed.getContent();
+
+				if (ed.selection.getContent() != '') {
+					fragment = true;
+					content = ed.selection.getContent();
 				}
 
-				$.post(command_url, {content: content}, function (data) {
-					if (data.success == true) {
+				typograf(content, fragment, function (text) {
+					if (text) {
 						if (ed.selection.getContent() == '')
-							ed.setContent(data.data);
+							ed.setContent(text);
 						else
-							ed.execCommand('mceInsertContent', 0, data.data);
+							ed.execCommand('mceInsertContent', 0, text);
 
 						alert('Текст успешно обработан');
-					} else
-						alert('Ошибка! ' + data.data);
+					}
 				});
 
 			});
@@ -68,29 +69,6 @@
 			};
 		}
 	});
-
-	/**
-	 * Count bytes in a string's UTF-8 representation.
-	 *
-	 * @param   string
-	 * @return  int
-	 */
-	function getByteLen(normal_val) {
-		// Force string type
-		normal_val = String(normal_val);
-
-		var byteLen = 0;
-		for (var i = 0; i < normal_val.length; i++) {
-			var c = normal_val.charCodeAt(i);
-			byteLen += c < (1 << 7) ? 1 :
-				c < (1 << 11) ? 2 :
-					c < (1 << 16) ? 3 :
-						c < (1 << 21) ? 4 :
-							c < (1 << 26) ? 5 :
-								c < (1 << 31) ? 6 : Number.NaN;
-		}
-		return byteLen;
-	}
 
 	// Register plugin
 	tinymce.PluginManager.add('tpf', tinymce.plugins.ClTpf);

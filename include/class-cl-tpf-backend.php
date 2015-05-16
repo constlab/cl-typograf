@@ -18,6 +18,19 @@ class Cl_Tpf_Backend {
 
 		add_filter( 'tiny_mce_before_init', array( $this, 'tiny_mce_before_init' ) );
 		add_filter( 'print_scripts_array', array( $this, 'rewrite_default_script' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+
+		add_action( 'admin_print_footer_scripts', array( $this, 'appthemes_add_quicktags' ) );
+	}
+
+	function appthemes_add_quicktags() {
+		if ( wp_script_is( 'quicktags' ) ) {
+			?>
+			<script type="text/javascript">
+				initQtag();
+			</script>
+		<?php
+		}
 	}
 
 	/**
@@ -85,7 +98,7 @@ class Cl_Tpf_Backend {
 	 * @return mixed
 	 */
 	function editor_add_buttons( $plugin_array ) {
-		$plugin_array['tpf'] = $js_path = plugins_url( '', __FILE__ ) . '/../assets/js/tpf_mce.js';;
+		$plugin_array['tpf'] = $js_path = plugins_url( '', __FILE__ ) . '/../assets/js/tpf_mce.js';
 
 		return $plugin_array;
 	}
@@ -156,6 +169,14 @@ class Cl_Tpf_Backend {
 	}
 
 	/**
+	 * Include assets
+	 */
+	function enqueue_scripts(){
+		wp_register_script( 'typograf', plugins_url( '', __FILE__ ) . '/../assets/js/typograf.js',array('jquery'));
+		wp_enqueue_script('typograf');
+	}
+
+	/**
 	 * Add meta box to post edit page
 	 */
 	function add_metaboxes() {
@@ -182,18 +203,19 @@ class Cl_Tpf_Backend {
 			wp_send_json_error( 'Нет текста для обработки!' );
 		}
 
-		$content = $_POST['content'];
+		$fragment = (bool) $_POST['fragment'];
+		$content  = $_POST['content'];
 
 		if ( empty( $content ) ) {
 			wp_send_json_error( 'Нет текста!' );
 		}
 
 		$typograf = new RemoteTypograf( get_bloginfo( 'charset' ) );
-		$typograf->mixedEntities();
+		$typograf->htmlEntities();
 		$typograf->br( false );
-		$typograf->p( true );
+		$typograf->p( ! $fragment );
 
-		$result = $typograf->processText(  $content );
+		$result = $typograf->processText( $content );
 
 		wp_send_json_success( $result );
 	}
@@ -231,21 +253,21 @@ class Cl_Tpf_Backend {
 		$post_excerpt = $_POST['post_excerpt'];
 		$post_content = $_POST['post_content'];
 
-        $big_length = 32768;
+		$big_length = 32768;
 
 		$typograf = new RemoteTypograf( get_bloginfo( 'charset' ) );
 		$typograf->noEntities();
 		$typograf->br( false );
 		$typograf->p( false );
 
-		$title   = ( ! empty( $post_title ) && mb_strlen($post_title) < $big_length) ? $typograf->processText( strip_tags( $post_title ) ) : '';
-		$excerpt = ( ! empty( $post_excerpt ) && mb_strlen($post_excerpt) < $big_length) ? $typograf->processText( strip_tags( $post_excerpt ) ) : '';
+		$title   = ( ! empty( $post_title ) && mb_strlen( $post_title ) < $big_length ) ? $typograf->processText( strip_tags( $post_title ) ) : '';
+		$excerpt = ( ! empty( $post_excerpt ) && mb_strlen( $post_excerpt ) < $big_length ) ? $typograf->processText( strip_tags( $post_excerpt ) ) : '';
 
 		$typograf->htmlEntities();
 		$typograf->br( false );
 		$typograf->p( true );
 
-		$content = ( ! empty( $post_content )  && mb_strlen($post_content) < $big_length) ? $typograf->processText(  $post_content ) : '';
+		$content = ( ! empty( $post_content ) && mb_strlen( $post_content ) < $big_length ) ? $typograf->processText( $post_content ) : '';
 
 		remove_action( 'save_post', array( $this, 'save_post_process' ) );
 
