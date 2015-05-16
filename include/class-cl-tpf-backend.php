@@ -206,7 +206,7 @@ class Cl_Tpf_Backend {
 		}
 
 		$fragment = (bool) $_POST['fragment'];
-		$content  = htmlentities2( $_POST['content'] );
+		$content  = $_POST['content'];
 
 		if ( empty( $content ) ) {
 			wp_send_json_error( 'Нет текста!' );
@@ -253,7 +253,7 @@ class Cl_Tpf_Backend {
 
 		$post_title   = $_POST['post_title'];
 		$post_excerpt = $_POST['post_excerpt'];
-		$post_content = htmlentities2( $_POST['post_content'] );
+		$post_content = $_POST['post_content'];
 
 		$big_length = 32768;
 
