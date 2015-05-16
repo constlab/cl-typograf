@@ -13,6 +13,18 @@ if ( (bool) get_post_meta( $post->ID, 'cl_tpf_disable', true ) ) {
 };
 ?>
 
+	<style>
+		#TB_window {
+			height: auto !important;
+		}
+
+		#TB_ajaxContent {
+			height: auto !important;
+			width: auto !important;
+			padding: 20px;
+		}
+	</style>
+
 	<label>
 		<input type="checkbox" name="cl_tpf_use" <?php echo checked( $use_tpf, true ) ?> />&nbsp;Использовать типограф
 	</label>

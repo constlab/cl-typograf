@@ -219,7 +219,7 @@ class Cl_Tpf_Backend {
 
 		$result = $typograf->processText( $content );
 
-		wp_send_json_success( $result );
+		wp_send_json_success(wp_unslash($result));
 	}
 
 	/**
