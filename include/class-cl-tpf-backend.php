@@ -29,7 +29,7 @@ class Cl_Tpf_Backend {
 			<script type="text/javascript">
 				initQtag();
 			</script>
-		<?php
+			<?php
 		}
 	}
 
@@ -81,6 +81,7 @@ class Cl_Tpf_Backend {
 		register_setting( 'cl_typograf', 'cl_autop_content', '' );
 		register_setting( 'cl_typograf', 'cl_autop_excerpt', '' );
 		register_setting( 'cl_typograf', 'cl_disable_mce', '' );
+		register_setting( 'cl_typograf', 'cl_show_metabox', '' );
 
 		$this->add_metaboxes();
 
@@ -183,11 +184,15 @@ class Cl_Tpf_Backend {
 	 */
 	function add_metaboxes() {
 
-		$types = get_post_types( array( 'public' => true ), 'names' );
+		$show_everywhere = (bool) get_option( 'cl_show_metabox' );
+		$types           = get_post_types( array( 'public' => true ), 'names' );
 
 		foreach ( $types as $type ) {
-			if ( ! get_option( 'cl_tpf_' . $type ) ) {
-				continue;
+
+			if ( ! $show_everywhere ) {
+				if ( ! get_option( 'cl_tpf_' . $type ) ) {
+					continue;
+				}
 			}
 
 			add_meta_box( 'cl_tpf_edit', 'Типограф', function () {
@@ -219,7 +224,7 @@ class Cl_Tpf_Backend {
 
 		$result = $typograf->processText( $content );
 
-		wp_send_json_success(wp_unslash($result));
+		wp_send_json_success( wp_unslash( $result ) );
 	}
 
 	/**

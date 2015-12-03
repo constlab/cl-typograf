@@ -3,7 +3,7 @@ Contributors: joker-bs
 Donate link: http://constlab.ru/
 Tags: typograf, content, text
 Requires at least: 3.0.1
-Tested up to: 4.2.2
+Tested up to: 4.3.1
 Stable tag: master
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -15,6 +15,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Плагин позволяет обрабатывать текст через сервис «Типограф» Студии Артемия Лебедева. Обработка происходит при сохранении
 записи или по требованию из редактора. Есть возможность выбора типа записей для использования типографа.
 Можно отключить типограф для конкретной записи.
+Репозиторий на Github https://github.com/constlab/cl-typograf
+Задать вопрос https://github.com/constlab/cl-typograf/issues/new
 
 == Installation ==
 
@@ -36,6 +38,11 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 == Screenshots ==
 
 == Changelog ==
+
+= 1.2.6 =
+* Добавлена опция "Добавить метабокс типографа ко всем записям".
+  Если эта опция включена, то в редактировании всех типов записей будет показываться метабокс типографа.
+  Это позволить типографить ткст вручную через диалог. Запись не будет обрабатываться при сохранении.
 
 = 1.2.5 =
 * Фикс критического бага, с отключением стандартного форматирования wp

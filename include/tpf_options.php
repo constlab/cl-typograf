@@ -76,6 +76,12 @@ $types = get_post_types( array( 'public' => true ), 'objects' );
 								<?php echo checked( get_option( 'cl_disable_mce' ), 'on' ) ?> />
 							Отключить типограф для редактора
 						</label>
+						<br>
+						<label for="cl_show_metabox">
+							<input name="cl_show_metabox" id="cl_show_metabox" type="checkbox"
+								<?php echo checked( get_option( 'cl_show_metabox' ), 'on' ) ?> />
+							Добавить метабокс типографа ко всем записям
+						</label>
 					</fieldset>
 				</td>
 			</tr>
