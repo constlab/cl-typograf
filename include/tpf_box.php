@@ -36,7 +36,9 @@ if ( (bool) get_post_meta( $post->ID, 'cl_tpf_disable', true ) ) {
 			Скопируйте текст в поле ниже и нажмите кнопку "Оттипографить".
 		</p>
 
-		<textarea id="tpf-one" cols="30" rows="10" style="width: 100%;margin-bottom: 10px;" autofocus="autofocus"></textarea>
+		<textarea id="tpf-one" cols="30" rows="10" style="width: 100%;margin-bottom: 10px;"
+		          autofocus="autofocus"></textarea>
+		<span id="tpf-one-status" style="color: green;"></span>
 		<a href="#" class="button button-primary" style="float: right;" id="tpf-dialog-ok">Оттипографить</a>
 
 	</div>
