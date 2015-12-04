@@ -43,7 +43,7 @@ if ( (bool) get_post_meta( $post->ID, 'cl_tpf_disable', true ) ) {
 
 	</div>
 
-	<a href="#TB_inline?width=600&height=550&inlineId=tpf-dialog" class="thickbox" title="Типограф">Типограф</a>
+	<a href="#TB_inline?width=600&height=550&inlineId=tpf-dialog" class="thickbox tpf-dialog-link" title="Типограф">Типограф</a>
 <?php if ( user_can( get_current_user_id(), 'manage_options' ) ): ?>
 	&nbsp;|&nbsp;<a href="<?php echo admin_url( 'options-general.php?page=cl-typograf.php' ) ?>">Настройки</a>
 <?php endif; ?>
