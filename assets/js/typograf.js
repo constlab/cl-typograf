@@ -8,7 +8,7 @@
      * @param callback
      * @returns {boolean}
      */
-    function typograf(content, fragment, callback) {
+    window.typograf = function (content, fragment, callback) {
         var command_url = ajaxurl + '?action=cl-tpf';
 
         if (getByteLen(content) >= 32768) {
@@ -33,7 +33,7 @@
      * @param editor_id
      * @returns {*}
      */
-    function getSelectionEditor(editor_id) {
+    window.getSelectionEditor = function(editor_id) {
         var textComponent = document.getElementById(editor_id);
         var selectedText;
         // IE version

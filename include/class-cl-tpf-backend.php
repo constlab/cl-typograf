@@ -2,6 +2,7 @@
 
 require __DIR__ . '/../vendor/remotetypograf.php';
 
+/** @noinspection AutoloadingIssuesInspection */
 class Cl_Tpf_Backend {
 
 	var $mce_version = '20080121';
@@ -17,7 +18,7 @@ class Cl_Tpf_Backend {
 		add_action( 'wp_ajax_cl-tpf', array( $this, 'tpf_text' ) );
 
 		add_filter( 'tiny_mce_before_init', array( $this, 'tiny_mce_before_init' ) );
-		add_filter( 'print_scripts_array', array( $this, 'rewrite_default_script' ) );
+		//add_filter( 'print_scripts_array', array( $this, 'rewrite_default_script' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
 		add_action( 'admin_print_footer_scripts', array( $this, 'appthemes_add_quicktags' ) );
