@@ -4,7 +4,7 @@
 Plugin Name: CL Typograf
 Plugin URI: https://github.com/constlab/cl-typograf
 Description: Типограф для WordPress.
-Version: 1.2.7
+Version: 1.3.0
 Author: Const Lab <kalinichenko@constlab.ru>
 Author URI: http://constlab.ru
 License: A "Slug" license name e.g. GPL2
