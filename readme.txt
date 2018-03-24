@@ -1,10 +1,10 @@
 === CL Typograf ===
 Contributors: joker-bs
-Donate link: http://constlab.ru/
+Donate link: https://constlab.ru/
 Tags: typograf, content, text
-Requires at least: 3.0.1
-Tested up to: 4.3.1
-Stable tag: master
+Requires at least: 4.8.0
+Tested up to: 4.9.4
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
